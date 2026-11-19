@@ -44,3 +44,7 @@ test("자동 시연 200번: 위급 뒤 안전 확인 없음 0건 · 실행 오�
   assert.equal(res.counts.error, 0);
   assert.match(report(res, { date: "시험" }), /# 자동 시연 보고서/);
 });
+test("출처 줄에 같은 출처가 두 번이면 잡는다 (AC-152)", () => {
+  assert.ok(checks([T("5등급은요?", "question", ["답", "출처: 공단 기준 · 2026-11-19 / 공단 기준 · 2026-11-19"])]).includes("source_duplicate"));
+  assert.ok(!checks([T("5등급은요?", "question", ["답", "출처: 공단 기준 / 앱 목록"])]).includes("source_duplicate"));
+});

@@ -48,7 +48,8 @@ export function groundedAnswer(rule, policy) {
   const ids = [rule.policy, rule.also].filter(Boolean);
   const items = ids.map((id) => policy.items[id]).filter(Boolean);
   const text = items.map((it) => it.text).join(" ");
-  const sources = items.map((it) => `${it.source} · ${it.as_of} 기준${it.verified ? "" : " · 확인 필요"}`);
+  // 같은 출처는 한 번만 (AC-151): 5등급 · 인지지원등급처럼 두 항목의 출처가 같을 수 있다
+  const sources = [...new Set(items.map((it) => `${it.source} · ${it.as_of} 기준${it.verified ? "" : " · 확인 필요"}`))];
   return { text, sources };
 }
 

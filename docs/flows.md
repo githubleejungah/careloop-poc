@@ -136,7 +136,7 @@ flowchart TD
 flowchart LR
   SC["시나리오 · 끼워 넣을 말<br/>scenarios.json"] --> VAR["변형기 (시드 고정, AC-146)<br/>띄어쓰기 · 어미 · 말 바꿈 · 되풀이 · 엉뚱한 말 · 선택지 누르기"]
   VAR --> RUN["agent.js로 대화 200번 (AC-143)"]
-  RUN --> CHK{"이상 패턴 5가지 (AC-144)"}
+  RUN --> CHK{"이상 패턴 6가지 (AC-144 · 152)"}
   CHK -->|위급 뒤 안전 확인 없음| FAIL["시험 실패 (AC-147)"]
   CHK -->|그 밖의 의심| REP["보고서 reports/시연_날짜.md (AC-145)"]
   REP --> HUM{"사람 판정"}

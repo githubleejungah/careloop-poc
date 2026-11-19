@@ -1,5 +1,5 @@
 // 자동 시연 (Q28 · AC-143~147). 사람이 대화를 쳐 보는 대신, 문장을 바꿔 가며 대화를 여러 번 돌리고
-// 이상 패턴 5가지로 의심 대화만 보고서에 모은다. 비용 0원, 사이트에는 들어가지 않는 개발 도구.
+// 이상 패턴 6가지로 의심 대화만 보고서에 모은다. 비용 0원, 사이트에는 들어가지 않는 개발 도구.
 // 실행: npm run demo  (또는 node scripts/demo/run.mjs --n 200 --seed 1)
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";

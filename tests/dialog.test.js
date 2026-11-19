@@ -144,3 +144,10 @@ test("물음표 없는 음성 질문('언제 연락 와요')도 예/아니요 ·
   const c = talk([...BASE, "생각해보니 치매 검사를 받으셨어요", "언제연락 와요?"]);
   assert.match(c.said(5), /2027년/); assert.match(c.said(5), /진단이 나오셨나요/);
 });
+
+// ── Q30: 출처 줄에 같은 출처가 두 번 나옴 (AC-151) ──
+test("5등급 답의 출처 줄에 같은 출처를 두 번 쓰지 않는다 (AC-151)", () => {
+  const { outs } = talk(["5등급은 어떻게 받아요?"]);
+  const src = outs[0].say.find((l) => l.startsWith("출처:")).replace("출처: ", "").split(" / ");
+  assert.equal(new Set(src).size, src.length, src.join(" / "));
+});

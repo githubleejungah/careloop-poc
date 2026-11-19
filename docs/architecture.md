@@ -61,7 +61,7 @@ flowchart LR
 | `golden.js` | 골든셋 채점. 브라우저 '시험 결과' 탭과 node 시험이 같은 함수를 쓴다 | AC-67~69 · 90 |
 | `app.js` | 화면 연결만. 규칙은 하네스 모듈에 둔다 | — |
 | `tests/` | 골든셋(50개 이상) + 개인정보 빼내기 문항 + 날짜 계산 · 대화 흐름 · 작업 규칙 시험 + 드리프트 점검(`drift.test.js`: 코드 안 중복 값 · 문서 숫자 · 요구 사본) | AC-67~70, 74, 75, 90, 131, 132 |
-| `scripts/demo/` | 자동 시연(Q28). `scenarios.json`(시나리오 · 끼워 넣을 말 정본) → `variants.mjs`(띄어쓰기 · 어미 변형, 시드 난수) → `run.mjs`(agent.js로 대화 200번) → `checks.mjs`(이상 패턴 5가지) → `reports/시연_날짜.md`(Git 제외). 사이트에는 들어가지 않는 개발 도구 | AC-143~147 |
+| `scripts/demo/` | 자동 시연(Q28). `scenarios.json`(시나리오 · 끼워 넣을 말 정본) → `variants.mjs`(띄어쓰기 · 어미 변형, 시드 난수) → `run.mjs`(agent.js로 대화 200번) → `checks.mjs`(이상 패턴 6가지, 6번째 출처 중복) → `reports/시연_날짜.md`(Git 제외). 사이트에는 들어가지 않는 개발 도구 | AC-143~147, 152 |
 | `scripts/sync-copies.mjs` | 요구 문서 사본(포트폴리오 04)을 원본에서 다시 만든다. 사본 위치는 `copies.local.json`(Git 제외) | AC-132 |
 
 ## 3. 호출 흐름 (고객이 한마디 할 때)
