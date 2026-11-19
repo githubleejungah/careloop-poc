@@ -25,7 +25,7 @@
 ## 자주 쓰는 명령
 ```bash
 python -m http.server 8010 --directory site    # 공개 주소: https://githubleejungah.github.io/careloop-poc/ (main에 올리면 시험 후 자동 배포)
-node --test tests/                     # 드리프트 점검 포함
+npm test                               # 드리프트 점검 포함
 node scripts/sync-copies.mjs           # 요구 사본 다시 만들기
 npm run demo                           # 자동 시연 → reports/시연_날짜.md (의심 대화만)
 python "C:/dev/workspace-igm/self study/ref-project/sdd/99_toolchain/01_automation/doc_lint.py" ears docs/requirements.md --min 100 --all-patterns --strict
