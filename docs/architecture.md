@@ -100,3 +100,8 @@ flowchart LR
 | `channels.js` 모의 발송함 | 전화 API · 알림톡 · 이로움케어 · 파트너 연동 | 발송 내용 · 횟수 규칙 |
 | `store.js` localStorage | 서버 DB(암호화) | 데이터 구조(data-model.md) |
 | `policywatch.js` 예시 입력 | 국가법령정보센터 API 등 매일 수집 | 점검 규칙(날짜 · 유예 · 해석) |
+
+## 6. 배포 (공개 링크)
+- 주소: https://githubleejungah.github.io/careloop-poc/ (2026-11-19 공개, GitHub Pages)
+- 흐름: `main`에 올림 → GitHub Actions가 `npm test`(시험 95개) → 통과하면 `site/` 폴더만 Pages에 올림. 실패하면 배포하지 않는다.
+- 공개 범위: 저장소 전체가 공개(Public)다. 데이터는 모두 가상이고 서버 · 유료 API · 비밀 키가 없다. 요구 사본 위치(`copies.local.json`)와 자동 시연 보고서(`reports/`)는 Git에 올리지 않는다.
