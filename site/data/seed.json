@@ -1,0 +1,14 @@
+{
+  "note": "모두 가상 데이터다. 실제 사람 · 번호가 아니다(AC-65).",
+  "people": [
+    { "id": "P-01", "role": "guardian", "name": "김가온", "phone": "010-0000-1111", "relation": "딸",
+      "elder": { "id": "E-01", "name": "박하늘", "grade": "등급외", "result_date": "2026-11-19", "cert_no": "L0000000001", "address": "서울시 가상구 가상동 1-1" },
+      "remaining_limit": 0 },
+    { "id": "P-02", "role": "guardian", "name": "이나래", "phone": "010-0000-2222", "relation": "아들",
+      "elder": { "id": "E-02", "name": "최바다", "grade": "3등급", "cert_no": "L0000000002", "address": "부산시 가상구 가상로 2" },
+      "remaining_limit": 1325000 }
+  ],
+  "orders": [
+    { "id": "O-01", "person_id": "P-02", "item": "성인용보행기 실버카 KS-130", "type": "구입", "delivered_at": "2026-05-25", "provider": "가상 복지용구 사업소 A" }
+  ]
+}

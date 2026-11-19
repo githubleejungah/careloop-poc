@@ -1,0 +1,10 @@
+{
+  "name": "careloop-poc",
+  "private": true,
+  "type": "module",
+  "description": "돌봄 점검 루프 POC (개인 시제품, 가상 데이터)",
+  "scripts": {
+    "test": "node --test tests/",
+    "demo": "node scripts/demo/run.mjs --n 200 --seed 1"
+  }
+}

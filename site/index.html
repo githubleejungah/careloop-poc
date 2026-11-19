@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>돌봄 점검 루프 POC</title>
+  <link rel="stylesheet" href="css/style.css?v=4">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>돌봄 점검 루프 <small>POC · 개인 시제품</small></h1>
+      <p class="note">이로움돌봄 개선 제안을 위한 개인 시제품입니다. 회사와 관계없고, 모든 사람 · 번호 · 대화는 가상입니다. 실제 전화 · 알림톡은 보내지 않습니다.</p>
+    </div>
+    <div class="clock">지금(가상) <b id="now">-</b></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="customer" aria-selected="true">① 고객 화면</button>
+    <button role="tab" data-tab="counselor">② 상담사 · 사업소</button>
+    <button role="tab" data-tab="ops">③ 운영 · 일정 · 제도</button>
+    <button role="tab" data-tab="tests">④ 시험 결과</button>
+  </nav>
+
+  <main>
+    <section id="tab-customer" class="tab on">
+      <div class="customer">
+        <div class="phone" aria-label="고객 휴대폰 화면">
+          <div class="phone-top"><span id="phone-title">테스트 결과</span></div>
+          <div id="screen-result" class="screen">
+            <p class="muted">예상 장기요양등급 결과 (개선안)</p>
+            <h2>지금 답으로는 등급을 받기 어려울 수 있어요</h2>
+            <p class="muted small">실제 판정은 국민건강보험공단 조사로 정해져요. 상태가 바뀌면 다시 해 보세요.</p>
+            <div class="pick">
+              <button class="primary" data-channel="voice">🎙 말로 상담하기</button>
+              <button data-channel="text">⌨ 글로 상담하기</button>
+              <button data-channel="human">☎ 사람과 통화하기</button>
+            </div>
+            <div class="sub-actions">
+              <button class="ghost" id="btn-129">보건복지상담센터 129</button>
+              <button class="ghost" id="btn-remind">3개월 뒤 알림 받기</button>
+            </div>
+          </div>
+          <div id="screen-chat" class="screen hidden">
+            <div id="chat" class="chat" aria-live="polite"></div>
+            <div id="choices" class="choices"></div>
+            <form id="say" class="say" onsubmit="return false">
+              <button type="button" id="mic" title="말하기">🎙</button>
+              <input id="msg" autocomplete="off" placeholder="말씀하시거나 입력하세요">
+              <button type="submit">보내기</button>
+            </form>
+            <button class="ghost small" id="back">처음 화면으로</button>
+          </div>
+        </div>
+        <aside class="try">
+          <h3>시연 순서</h3>
+          <ol>
+            <li>"말로 상담하기" → <q>엄마가 밤에 자꾸 밖에 나가세요</q> → <q>아직이요</q> → <q>네</q> → <q>평일 저녁</q></li>
+            <li>③ 운영에서 <b>+90일</b> → 알림톡 · 재검사 안내</li>
+            <li>③ 운영에서 6개월 점검 "받음" → <q>바퀴가 덜컹거려요</q></li>
+            <li><q>지난주에 넘어지셨어요</q> → 즉시 사람 연결</li>
+            <li><q>보행기 값 좀 깎아 주세요</q> → 선택지</li>
+            <li><q>오늘 날씨 어때요?</q> → 범위 안내</li>
+          </ol>
+          <label class="row"><input type="checkbox" id="is-elder"> 어르신 본인과 통화 중(요청 대신 보호자 확인)</label>
+          <p class="muted small" id="voice-note"></p>
+          <div class="voice-box">
+            <h3>목소리 비교</h3>
+            <label class="row small">목소리 <select id="voice-pick"></select></label>
+            <label class="row small"><input type="checkbox" id="rise" checked> 질문 끝 조금 올리기(예전 방식 목소리만)</label>
+            <button id="voice-test" class="ghost">이 문장 들어 보기: "어떤 점이 제일 걱정되세요?"</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tab-counselor" class="tab">
+      <div class="cols">
+        <div><h3>상담사 작업함</h3><ul id="tasks" class="list"></ul></div>
+        <div><h3>사업소 받은 함 <small>(품목 · 문제 · 연락 시간 3가지만)</small></h3><ul id="provider" class="list"></ul></div>
+      </div>
+    </section>
+
+    <section id="tab-ops" class="tab">
+      <div class="clockbar">
+        <span>시간 앞당기기</span>
+        <button data-adv="1">+1일</button><button data-adv="7">+1주</button>
+        <button data-adv="90">+90일</button><button data-adv="180">+180일</button>
+        <button id="reset" class="ghost">처음 상태로</button>
+      </div>
+      <div class="cols">
+        <div><h3>재연락 일정</h3><table class="tbl"><thead><tr><th>사람</th><th>종류</th><th>예정</th><th>상태</th><th></th></tr></thead><tbody id="schedules"></tbody></table></div>
+        <div><h3>모의 발송함</h3><ul id="outbox" class="list small"></ul></div>
+      </div>
+      <div class="cols">
+        <div><h3>경보 <small>(같은 경보는 하루 1번)</small></h3><ul id="alerts" class="list small"></ul>
+             <h3>월간 보고 <small>(묶음 숫자만)</small></h3><pre id="report" class="pre"></pre>
+             <h3>규정 후보 <small>(사람 승인 전에는 반영 안 함)</small></h3><ul id="candidates" class="list small"></ul></div>
+        <div><h3>제도 변경 자동 점검 <small>(가상 예문)</small></h3>
+          <div class="row"><select id="sample"></select><button id="analyze">점검</button></div>
+          <div id="policy-report"></div></div>
+      </div>
+    </section>
+
+    <section id="tab-tests" class="tab">
+      <div class="row"><button id="run-tests" class="primary">골든셋 시험 돌리기</button><span class="muted small">브라우저 안에서 node 시험과 같은 채점 함수를 돌린다</span></div>
+      <div id="test-summary"></div>
+      <table class="tbl"><thead><tr><th>번호</th><th>문장(가상)</th><th>판정</th><th>결과</th></tr></thead><tbody id="test-rows"></tbody></table>
+    </section>
+  </main>
+  <!-- 캐시 버스팅: 모듈을 고치면 아래 v 값과 app.js?v 값을 함께 올린다 -->
+  <script type="importmap">
+{
+  "imports": {
+    "./js/agent.js": "./js/agent.js?v=16",
+    "./js/guard.js": "./js/guard.js?v=16",
+    "./js/classifier.js": "./js/classifier.js?v=16",
+    "./js/scheduler.js": "./js/scheduler.js?v=16",
+    "./js/clock.js": "./js/clock.js?v=16",
+    "./js/privacy.js": "./js/privacy.js?v=16",
+    "./js/channels.js": "./js/channels.js?v=16",
+    "./js/log.js": "./js/log.js?v=16",
+    "./js/policywatch.js": "./js/policywatch.js?v=16",
+    "./js/golden.js": "./js/golden.js?v=16",
+    "./js/store.js": "./js/store.js?v=16",
+    "./js/voice.js": "./js/voice.js?v=16",
+    "./js/tasks.js": "./js/tasks.js?v=16"
+  }
+}
+  </script>
+  <script type="module" src="js/app.js?v=16"></script>
+</body>
+</html>
